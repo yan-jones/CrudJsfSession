@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <center>
+            <h:form id="formListar">
+                <h:dataTable id="tableProduto" rowClasses="amarelo,branco" value="#{produtoMB.produtos}" var="produto"
+                             rendered="#{not empty produtoMB.produtos}" border="1" style="text-align: center">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="ID"/>
+                        </f:facet>
+                        <h:outputText value="#{produto.id}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="NOME"/>
+                        </f:facet>
+                        <h:outputText value="#{produto.nome}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="TIPO"/>
+                        </f:facet>
+                        <h:outputText value="#{produto.tipoProduto}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="PAIS"/>
+                        </f:facet>
+                        <h:outputText value="#{produto.paisOrigem.nome}/#{produto.paisOrigem.presidente}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="QUANTIDADE"/>
+                        </f:facet>
+                        <h:outputText value="#{produto.qtdInicial}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="EDITAR"/>
+                        </f:facet>
+                        <h:commandLink id="editar" action="INDEX" value="EDITAR">
+                            <f:setPropertyActionListener value="#{produto}" target="#{produtoMB.produto}"/>
+                        </h:commandLink>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="EXCLUIR"/>
+                        </f:facet>
+                        <h:commandLink id="exlcuir" action="#{produtoMB.excluirProduto(produto)}" value="EXCLUIR"/>
+                    </h:column>
+                    <f:facet name="footer">
+                        <h:outputText value="Total = #{produtoMB.produtos.size()}"/>
+                    </f:facet>
+                </h:dataTable>
+                <br>    </br>
+                <h:commandLink id="voltar" action="INDEX" value="voltar"/>
+            </h:form>
+        </center>
+    </h:body>
+</html>
+

@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form id="formCadastrar">
+            <center>
+                <h:panelGrid id="panelProduto" columns="3">
+
+                    <h:outputText value="Nome do produto:"/>
+                    <h:inputText id="nome" value="#{produtoMB.produto.nome}" required="true"
+                                 requiredMessage="Nome e obrigatorio!" validator="#{produtoMB.validaNomeRepetido}">
+                        <f:validateLength maximum="200"/>
+                    </h:inputText>
+                    <h:message for="nome"/>
+
+                    <h:outputText value="Tipo de Produto"/>
+                    <h:selectOneMenu id="tipo" value="#{produtoMB.produto.tipoProduto}" required="true"
+                                     requiredMessage="Tipo do produto e obrigatorio!">
+                        <f:selectItems value="#{produtoMB.findAllTipoProduto()}" var="produto"
+                                       itemLabel="#{produto}" itemValue="#{produto}"/>
+                        <f:converter converterId="converterTipoProduto"/>
+                    </h:selectOneMenu>
+                    <h:message for="tipo"/>
+
+                    <h:outputText value="Pais de Origem"/>
+                    <h:selectOneMenu id="paisOrigem" value="#{produtoMB.produto.paisOrigem}" required="true"
+                                     requiredMessage="Pai de origem e obrigatorio!">
+                        <f:selectItems value="#{produtoMB.paisOrigemDAO.select()}" var="pais"
+                                       itemLabel="#{pais.nome}" itemValue="#{pais}"/>
+                        <f:converter converterId="converterPaisOrigem"/>
+                    </h:selectOneMenu>
+                    <h:message for="paisOrigem"/>
+
+                    <h:outputText value="Quantidade Inicial"/>
+                    <h:inputText id="qtdInicial" value="#{produtoMB.produto.qtdInicial}" required="true"
+                                 requiredMessage="Quantidade e obrigatorio!">
+                        <f:validator validatorId="validaQtdInicial"/>
+                    </h:inputText>
+                    <h:message for="qtdInicial"/>
+                </h:panelGrid>
+                <br></br>
+                <h:commandButton id="cadastrar" action="#{produtoMB.add()}" value="Incluir" 
+                                 rendered="#{empty produtoMB.produto.id}"/>
+                <h:commandButton id="alterar" action="#{produtoMB.editarProduto(produtoMB.produto)}" value="Alterar" 
+                                 rendered="#{not empty produtoMB.produto.id}"/>
+                <h:commandButton id="listar" action="LISTAR" immediate="true" value="Cancelar" 
+                                 rendered="#{not empty produtoMB.produtos}"/>
+            </center>
+        </h:form>
+    </h:body>
+</html>
+
